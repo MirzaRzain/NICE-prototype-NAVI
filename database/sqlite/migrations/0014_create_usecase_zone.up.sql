@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS usecase_zone (id INTEGER PRIMARY KEY AUTOINCREMENT, usecase_id INTEGER NOT NULL REFERENCES master_usecase(id) ON DELETE CASCADE, master_camera_zone_id INTEGER NOT NULL REFERENCES master_camera_zone(id) ON DELETE CASCADE, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME, created_by TEXT, updated_by TEXT, deleted_at DATETIME, deleted_by TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sqlite_usecase_zone_active ON usecase_zone(usecase_id, master_camera_zone_id) WHERE deleted_at IS NULL;

@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS master_inference (id INTEGER PRIMARY KEY AUTOINCREMENT, inference_name TEXT NOT NULL, inference_code TEXT NOT NULL, description TEXT, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, created_by TEXT, updated_at DATETIME, updated_by TEXT, deleted_at DATETIME, deleted_by TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sqlite_master_inference_code_active ON master_inference(inference_code) WHERE deleted_at IS NULL;

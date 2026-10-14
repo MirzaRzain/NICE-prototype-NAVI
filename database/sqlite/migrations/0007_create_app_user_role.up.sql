@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS app_user_role (user_id TEXT NOT NULL REFERENCES app_user(id) ON DELETE CASCADE, role_id INTEGER NOT NULL REFERENCES app_role(id) ON DELETE CASCADE, PRIMARY KEY (user_id, role_id));

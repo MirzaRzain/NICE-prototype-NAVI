@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS master_object (id INTEGER PRIMARY KEY AUTOINCREMENT, object_name TEXT NOT NULL, object_code TEXT NOT NULL, description TEXT, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, created_by TEXT, updated_at DATETIME, updated_by TEXT, deleted_at DATETIME, deleted_by TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sqlite_master_object_code_active ON master_object(object_code) WHERE deleted_at IS NULL;

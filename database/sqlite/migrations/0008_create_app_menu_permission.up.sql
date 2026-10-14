@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS app_menu_permission (id INTEGER PRIMARY KEY AUTOINCREMENT, menu_id INTEGER NOT NULL REFERENCES app_menu(id) ON DELETE CASCADE, code TEXT NOT NULL, action_name TEXT NOT NULL, created_by TEXT NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_by TEXT, updated_at DATETIME, UNIQUE (menu_id, action_name, code));

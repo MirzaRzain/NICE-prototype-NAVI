@@ -1,0 +1,1559 @@
+definitions:
+  be-dashboard-nba_internal_presentation_auth_presenter.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  be-dashboard-nba_internal_presentation_auth_presenter.SessionResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      user:
+        $ref: '#/definitions/be-dashboard-nba_internal_presentation_auth_presenter.UserResponse'
+    type: object
+  be-dashboard-nba_internal_presentation_auth_presenter.UserResponse:
+    properties:
+      active:
+        type: boolean
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      img_name:
+        type: string
+      img_path:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.CreateMenuPermissionRequest:
+    properties:
+      action_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      code:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - action_name
+    - code
+    type: object
+  be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.ReadMenuPermissionResponse:
+    properties:
+      action_name:
+        type: string
+      code:
+        type: string
+      id:
+        type: integer
+      menu_id:
+        type: integer
+    type: object
+  be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.UpdateMenuPermissionRequest:
+    properties:
+      action_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      code:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - action_name
+    - code
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.CreateMenuRequest:
+    properties:
+      active:
+        type: boolean
+      description:
+        maxLength: 100
+        type: string
+      display:
+        type: boolean
+      group:
+        maxLength: 50
+        minLength: 1
+        type: string
+      icon:
+        maxLength: 50
+        type: string
+      name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      parent_id:
+        minimum: 1
+        type: integer
+      url:
+        maxLength: 100
+        type: string
+    required:
+    - active
+    - display
+    - group
+    - name
+    - url
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.MenuListItem:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.MenuListItem'
+        type: array
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      sort:
+        type: integer
+      url:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.MenuParent:
+    properties:
+      group:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.ReadMenuListResponse:
+    properties:
+      group_childs:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.MenuListItem'
+        type: array
+      group_name:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.UpdateMenuOrderRequest:
+    properties:
+      group:
+        type: string
+      parent_id:
+        minimum: 1
+        type: integer
+      sorted_ids:
+        items:
+          type: integer
+        minItems: 1
+        type: array
+    required:
+    - group
+    - sorted_ids
+    type: object
+  be-dashboard-nba_internal_presentation_menu_presenter.UpdateMenuRequest:
+    properties:
+      active:
+        type: boolean
+      description:
+        maxLength: 100
+        type: string
+      display:
+        type: boolean
+      group:
+        maxLength: 50
+        minLength: 1
+        type: string
+      icon:
+        maxLength: 50
+        type: string
+      name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      parent_id:
+        minimum: 1
+        type: integer
+      url:
+        maxLength: 100
+        type: string
+    required:
+    - active
+    - display
+    - group
+    - name
+    type: object
+  be-dashboard-nba_internal_presentation_response.DataPayload:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_response.ErrorPayload:
+    properties:
+      code:
+        type: integer
+      error: {}
+      message:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_response.PaginatePayload:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      paginate:
+        $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.paginatePayload'
+    type: object
+  be-dashboard-nba_internal_presentation_response.paginatePayload:
+    properties:
+      current_page:
+        type: integer
+      per_page:
+        type: integer
+      total_data:
+        type: integer
+      total_page:
+        type: number
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.Access:
+    properties:
+      access_id:
+        type: integer
+      access_name:
+        type: string
+      has_access:
+        type: boolean
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.CreateRoleRequest:
+    properties:
+      code:
+        maxLength: 100
+        minLength: 1
+        type: string
+      description:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.ReadRoleResponse:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.RoleAccessResponse:
+    properties:
+      accesses:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.Access'
+        type: array
+      menu_id:
+        type: integer
+      menu_name:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleAccessItem:
+    properties:
+      access_id:
+        type: integer
+      has_access:
+        type: boolean
+    required:
+    - access_id
+    - has_access
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleAccessRequest:
+    properties:
+      access_item:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleAccessItem'
+        minItems: 1
+        type: array
+    required:
+    - access_item
+    type: object
+  be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleRequest:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  be-dashboard-nba_internal_presentation_user_presenter.CreateUserRequest:
+    properties:
+      active:
+        type: boolean
+      email:
+        type: string
+      full_name:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone:
+        type: string
+      role_id:
+        type: integer
+    required:
+    - active
+    - email
+    - full_name
+    - name
+    - password
+    - role_id
+    type: object
+  be-dashboard-nba_internal_presentation_user_presenter.ReadUserDetailResponse:
+    properties:
+      active:
+        type: boolean
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      role:
+        type: string
+      role_id:
+        type: integer
+    type: object
+  be-dashboard-nba_internal_presentation_user_presenter.ReadUserResponse:
+    properties:
+      active:
+        type: boolean
+      full_name:
+        type: string
+      id:
+        type: string
+      role:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_user_presenter.UpdateUserRequest:
+    properties:
+      active:
+        type: boolean
+      email:
+        type: string
+      full_name:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      role_id:
+        type: integer
+    required:
+    - active
+    - email
+    - full_name
+    - name
+    - role_id
+    type: object
+info:
+  contact: {}
+  description: Template API for Golang project
+  title: Base APP Go
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user with email and password, returning tokens and
+        user data. This endpoint uses a centralized error handler.
+      parameters:
+      - description: Login credentials
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_auth_presenter.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful login
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_auth_presenter.SessionResponse'
+              type: object
+        "400":
+          description: Bad Request (e.g., Validation Error, Invalid JSON)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized (e.g., Wrong email or password)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error (e.g., Database connection issue)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: User Login
+      tags:
+      - Authentication
+  /auth/logout:
+    post:
+      description: Logs out the current user by invalidating their session/token.
+        Requires Bearer token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully logged out
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (e.g., Validation Error, Invalid JSON)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error (e.g., Database connection issue)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: User Logout
+      tags:
+      - Authentication
+  /auth/me:
+    get:
+      description: Fetches the profile details of the currently authenticated user.
+        Requires Bearer token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved user profile
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_auth_presenter.UserResponse'
+              type: object
+        "401":
+          description: Unauthorized (Invalid or missing token)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: User profile not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Current User Profile
+      tags:
+      - Authentication
+  /menus:
+    get:
+      description: Retrieves a paginated and searchable list of all menus in the system.
+      parameters:
+      - description: Search term for name, description, or URL
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get menu list
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.ReadMenuListResponse'
+              type: object
+        "400":
+          description: Invalid query parameters
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get list menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get List of All Menus (Admin)
+      tags:
+      - Menu
+    post:
+      consumes:
+      - application/json
+      description: Adds a new menu item to the system. Requires Bearer token.
+      parameters:
+      - description: Menu data to create
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.CreateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully create menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid JSON or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Create Menu
+      tags:
+      - Menu
+  /menus/{menu_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Updates an existing menu item by its ID. Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully delete menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid Menu ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Menu
+      tags:
+      - Menu
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing menu item by its ID. Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Menu data to update
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.UpdateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid Menu ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Menu
+      tags:
+      - Menu
+  /menus/{menu_id}/permissions:
+    get:
+      description: Retrieves a paginated and searchable list of permissions (e.g.,
+        read, create) for a specific menu ID. Requires Bearer token.
+      parameters:
+      - description: ID of the Menu
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Search term for action_name
+        in: query
+        name: search
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      - description: Sort order (e.g., action_name ASC)
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get menu permission list
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.PaginatePayload'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.ReadMenuPermissionResponse'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request (Invalid Menu ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (Menu ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error (Query parsing or usecase failure)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Menu Permission List
+      tags:
+      - Menu Permission
+    post:
+      consumes:
+      - application/json
+      description: Adds a new permission (e.g., 'read', 'create') to a specific menu
+        by its ID. Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Permission data to create
+        in: body
+        name: permission
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.CreateMenuPermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully create menu permission
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid Menu ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Create Menu Permission
+      tags:
+      - Menu Permission
+  /menus/{menu_id}/permissions/{menu_permission_id}:
+    delete:
+      description: Deletes a specific permission from a menu by its unique permission
+        ID. Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Menu Permission ID
+        in: path
+        name: menu_permission_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully delete menu permission
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (Permission ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Delete Menu Permission
+      tags:
+      - Menu Permission
+    get:
+      description: Fetches the details of a single menu permission by its unique ID.
+        Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Menu Permission ID
+        in: path
+        name: menu_permission_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get menu permission detail
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.ReadMenuPermissionResponse'
+              type: object
+        "400":
+          description: Bad Request (Invalid ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (Permission ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Menu Permission Detail
+      tags:
+      - Menu Permission
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing menu permission (e.g., 'code', 'action_name')
+        by its unique ID. Requires Bearer token.
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      - description: Menu Permission ID
+        in: path
+        name: menu_permission_id
+        required: true
+        type: integer
+      - description: Permission data to update
+        in: body
+        name: permission
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.UpdateMenuPermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update menu permission
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (Permission ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Menu Permission
+      tags:
+      - Menu Permission
+  /menus/parent:
+    get:
+      description: Retrieves a list of all root-level menus (menus without a parent),
+        typically for use in a dropdown. Requires Bearer token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get parent menu
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.MenuParent'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get parent menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Parent Menus
+      tags:
+      - Menu
+  /menus/reorder:
+    put:
+      consumes:
+      - application/json
+      description: Updates the sort order of menus using drag-and-drop. Requires Bearer
+        token.
+      parameters:
+      - description: New menu order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.UpdateMenuOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update menu order
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid JSON or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Menu Order (Reorder)
+      tags:
+      - Menu
+  /menus/sidebar:
+    get:
+      description: Retrieves the menu list specifically for the authenticated user,
+        filtered by their 'read' permissions and formatted in a nested tree structure
+        for the sidebar.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get sidebar menu
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/be-dashboard-nba_internal_presentation_menu_presenter.ReadMenuListResponse'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get sidebar menu
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get User's Sidebar Menu
+      tags:
+      - Menu
+  /roles:
+    get:
+      description: Retrieves a paginated and searchable list of all roles. Requires
+        Bearer token.
+      parameters:
+      - description: Search term for role name
+        in: query
+        name: search
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      - description: Sort order (e.g., name ASC)
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get roles
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.PaginatePayload'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.ReadRoleResponse'
+                  type: array
+              type: object
+        "400":
+          description: Invalid query parameters
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Roles List
+      tags:
+      - Role
+    post:
+      consumes:
+      - application/json
+      description: Creates a new role. Requires Bearer token.
+      parameters:
+      - description: Role data to create
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.CreateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully create role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid JSON or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed create role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Create Role
+      tags:
+      - Role
+  /roles/{role_id}:
+    delete:
+      description: Deletes a role by its ID. Requires Bearer token.
+      parameters:
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully delete role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid Role ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized (Missing Auth)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Role ID not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed delete role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Delete Role
+      tags:
+      - Role
+    get:
+      description: Fetches the details of a single role by its ID. Requires Bearer
+        token.
+      parameters:
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get role detail
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.ReadRoleResponse'
+              type: object
+        "400":
+          description: Bad Request (Invalid Role ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (Role ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get role detail
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Role Detail
+      tags:
+      - Role
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing role by its ID. Requires Bearer token.
+      parameters:
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: integer
+      - description: Role data to update
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Role ID not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed update role
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Role
+      tags:
+      - Role
+  /roles/role-access/{role_id}:
+    get:
+      description: Retrieves all menu permissions associated with a specific role.
+        Requires Bearer token.
+      parameters:
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get role menu permission
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.PaginatePayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.RoleAccessResponse'
+              type: object
+        "400":
+          description: Invalid Role ID
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Role ID not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get role menu permission
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Role Menu Permission
+      tags:
+      - Role Menu Permission
+    put:
+      consumes:
+      - application/json
+      description: Updates menu permission assigned to a specific role. Requires Bearer
+        token.
+      parameters:
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: integer
+      - description: Role menu permission payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_role_presenter.UpdateRoleAccessRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update role menu permission
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Role ID or Menu Permission not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update Role Menu Permission
+      tags:
+      - Role Menu Permission
+  /users:
+    get:
+      description: Retrieves a paginated and searchable list of users in the system.
+        Requires Bearer token.
+      parameters:
+      - description: Search term for name or email
+        in: query
+        name: search
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      - description: Sort order (e.g., name ASC)
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get users
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.PaginatePayload'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.ReadUserResponse'
+                  type: array
+              type: object
+        "400":
+          description: Invalid query parameters
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Failed get users
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user with the provided details. Requires Bearer token.
+      parameters:
+      - description: User data to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully create user
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid JSON or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Role ID not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      tags:
+      - User
+  /users/{user_id}:
+    delete:
+      description: Deletes a user by their ID. Requires Bearer token. Users cannot
+        delete themselves.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully delete user
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid User ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "403":
+          description: Forbidden (Attempt to delete own account)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (User ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      tags:
+      - User
+    get:
+      description: Fetches the details of a single user by their ID. Requires Bearer
+        token.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully get user detail
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.ReadUserDetailResponse'
+              type: object
+        "400":
+          description: Bad Request (Invalid User ID)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found (User ID not found)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Updates a user's profile details by their ID. Requires Bearer token.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: User data to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update user
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: User ID not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      tags:
+      - User
+  /users/me:
+    get:
+      description: Fetches the profile details of the currently authenticated user.
+        Requires Bearer token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved user profile
+          schema:
+            allOf:
+            - $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+            - properties:
+                data:
+                  $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.ReadUserResponse'
+              type: object
+        "401":
+          description: Unauthorized (Invalid or missing token)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: User profile not found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Get Current User Profile
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Updates a user's profile details by their ID. Requires Bearer token.
+      parameters:
+      - description: User data to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_user_presenter.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully update user
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request (Invalid ID, Invalid JSON, or Validation Error)
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      security:
+      - BearerAuth: []
+      summary: Update User
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer {your token}" into the field below.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

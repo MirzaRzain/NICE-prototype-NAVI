@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS app_login (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT REFERENCES app_user(id) ON DELETE CASCADE, access_token TEXT, status TEXT CHECK (status IN ('login', 'logout')), ip_address TEXT, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, type TEXT DEFAULT 'web' CHECK (type IN ('api', 'web')));

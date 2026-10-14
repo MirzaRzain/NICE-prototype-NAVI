@@ -1,0 +1,9 @@
+database:
+  driver: sqlite
+  path: /home/mirza-ruzain/navi-data/navi-benchmark.db
+
+auth:
+  pin: "123456"
+  access_token_secret_key: change-this-access-secret
+  refresh_token_secret_key: change-this-refresh-secret
+  permanent_tokens: true

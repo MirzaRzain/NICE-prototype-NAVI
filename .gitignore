@@ -1,0 +1,27 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Dev build
+bin/
+build/
+tmp/
+
+# Test
+coverage
+coverage.html
+
+# Environment files
+.env
+Makefile
+credentials/
+
+# Runtime logs
+logs/
+
+# Cache
+.gocache
+.golangci-cache

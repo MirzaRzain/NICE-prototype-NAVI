@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS master_camera_zone (id INTEGER PRIMARY KEY AUTOINCREMENT, camera_id INTEGER NOT NULL REFERENCES master_camera(id) ON DELETE CASCADE, zone_name TEXT NOT NULL, zone_type TEXT NOT NULL, zone_coordinate TEXT NOT NULL, config TEXT NOT NULL DEFAULT '{}', created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME, created_by TEXT, updated_by TEXT, deleted_at DATETIME, deleted_by TEXT);
+CREATE INDEX IF NOT EXISTS idx_sqlite_master_camera_zone_camera_id ON master_camera_zone(camera_id) WHERE deleted_at IS NULL;

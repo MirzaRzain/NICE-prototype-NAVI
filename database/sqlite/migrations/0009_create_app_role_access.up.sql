@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS app_role_access (role_id INTEGER NOT NULL REFERENCES app_role(id) ON DELETE CASCADE, menu_permission_id INTEGER NOT NULL REFERENCES app_menu_permission(id) ON DELETE CASCADE, PRIMARY KEY (role_id, menu_permission_id));
