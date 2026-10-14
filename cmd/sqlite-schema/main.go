@@ -9,15 +9,12 @@ import (
 
 	db "be-dashboard-nba/internal/infrastructure/database"
 	"be-dashboard-nba/internal/infrastructure/logger"
-
-	"github.com/joho/godotenv"
+	runtime "be-dashboard-nba/internal/infrastructure/runtime"
 )
 
 func main() {
-	if os.Getenv("APP_ENV") == "" {
-		if err := godotenv.Load(".env"); err != nil {
-			log.Fatal(err)
-		}
+	if err := runtime.LoadConfig(); err != nil {
+		log.Fatal(err)
 	}
 	logger.NewLogger()
 	defer logger.Close()

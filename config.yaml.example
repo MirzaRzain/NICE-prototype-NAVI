@@ -1,9 +1,44 @@
+app:
+  name: "Go Backend Template API"
+  env: development
+  host: 127.0.0.1
+  port: 8008
+  url: http://localhost:8008
+  debug: false
+  prometheus: false
+  request_timeout: 10s
+  shutdown_timeout: 10s
+  shutdown_wait: 200ms
+  rate_limit_per_second: 20
+  rate_limit_ip_per_second: 200
+
 database:
   driver: sqlite
-  path: /home/mirza-ruzain/navi-data/navi-benchmark.db
+  path: ./navi-benchmark.db
+  max_open_connections: 1
+  max_idle_connections: 1
 
 auth:
   pin: "123456"
   access_token_secret_key: change-this-access-secret
+  access_token_expires: 24h
   refresh_token_secret_key: change-this-refresh-secret
+  refresh_token_expires: 48h
   permanent_tokens: true
+  bcrypt_cost: 10
+  default_admin_email: superadmin@gmail.com
+  default_admin_password: CHANGE_ME
+
+logging:
+  directory: logs
+  file: app.txt
+
+external:
+  base_url_cv: http://127.0.0.1:5009/api/v1/
+  model_storage_dir: storage/models
+
+swagger:
+  enabled: true
+  host: localhost:8008
+  base_path: /api/v1
+  services: ""

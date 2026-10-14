@@ -48,7 +48,7 @@ scripts/
 
 ## Environment
 
-Copy `.env.example` to `.env` and adjust the values for your environment.
+Copy `.env.example` to `.env` and adjust the values for your environment. For SSH development without `.env`, configure `config.yaml`; when that file exists, it is loaded as the primary configuration source.
 
 Important values:
 
@@ -79,6 +79,25 @@ make migrate.seed
 ```
 
 Dengan Docker Compose, PostgreSQL tersedia di host pada port `5437`. Jalankan `make docker.up` terlebih dahulu. Untuk menjalankan migration/seeder dari dalam container, gunakan `make docker.migrate.up` dan `make docker.migrate.seed`.
+
+## Deploy dengan Docker Compose di server SSH
+
+Di server, siapkan environment Docker lalu jalankan:
+
+```bash
+cp .env.docker.example .env
+# edit .env: password database, secret JWT, APP_URL, dan BASE_URL_CV
+docker compose config --quiet
+docker compose up -d --build
+docker compose run --rm app migrate.up
+docker compose run --rm app migrate.seed
+docker compose ps
+docker compose logs -f app
+```
+
+Container aplikasi bind ke `0.0.0.0` dan PostgreSQL hanya diperlukan oleh container internal. Port API mengikuti `APP_PORT` (default `8000`); buka port tersebut di firewall/security group bila API perlu diakses dari luar server.
+
+`config.yaml` adalah konfigurasi SQLite untuk development lokal dan sengaja tidak dipakai di image Docker. Gunakan `.env.docker.example` untuk deployment Compose.
 
 Dokumentasi handoff frontend untuk Master Source tersedia di [docs/frontend-handoff-master-source.md](docs/frontend-handoff-master-source.md).
 
