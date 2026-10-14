@@ -63,6 +63,53 @@ definitions:
       phone:
         type: string
     type: object
+  be-dashboard-nba_internal_presentation_master_presenter.CreateUsecaseRequest:
+    properties:
+      description:
+        type: string
+      usecase_code:
+        maxLength: 255
+        type: string
+      usecase_name:
+        maxLength: 255
+        type: string
+    required:
+    - usecase_code
+    - usecase_name
+    type: object
+  be-dashboard-nba_internal_presentation_master_presenter.InferenceObjectRequest:
+    properties:
+      inference_id:
+        minimum: 1
+        type: integer
+      object_id:
+        minimum: 1
+        type: integer
+    required:
+    - inference_id
+    - object_id
+    type: object
+  be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest:
+    properties:
+      inference_objects:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.InferenceObjectRequest'
+        type: array
+    type: object
+  be-dashboard-nba_internal_presentation_master_presenter.UpdateUsecaseRequest:
+    properties:
+      description:
+        type: string
+      usecase_code:
+        maxLength: 255
+        type: string
+      usecase_name:
+        maxLength: 255
+        type: string
+    required:
+    - usecase_code
+    - usecase_name
+    type: object
   be-dashboard-nba_internal_presentation_master_presenter.UsecaseListResponse:
     properties:
       code:
@@ -550,6 +597,164 @@ paths:
           schema:
             $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
       summary: Get Usecase List
+      tags:
+      - Master Usecase
+    post:
+      consumes:
+      - application/json
+      description: Creates the basic master usecase data. Inference-object assignments
+        are configured separately.
+      parameters:
+      - description: Usecase payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.CreateUsecaseRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Create Master Usecase
+      tags:
+      - Master Usecase
+  /master/usecases/{usecase_id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Usecase ID
+        in: path
+        name: usecase_id
+        required: true
+        type: integer
+      - description: Usecase payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UpdateUsecaseRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Update Master Usecase
+      tags:
+      - Master Usecase
+  /master/usecases/{usecase_id}/inference-objects:
+    get:
+      parameters:
+      - description: Usecase ID
+        in: path
+        name: usecase_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get Usecase Inference Objects
+      tags:
+      - Master Usecase
+    post:
+      consumes:
+      - application/json
+      description: Creates or replaces all inference-object assignments for a usecase.
+      parameters:
+      - description: Usecase ID
+        in: path
+        name: usecase_id
+        required: true
+        type: integer
+      - description: Inference-object assignments
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Set Usecase Inference Objects
+      tags:
+      - Master Usecase
+    put:
+      consumes:
+      - application/json
+      description: Creates or replaces all inference-object assignments for a usecase.
+      parameters:
+      - description: Usecase ID
+        in: path
+        name: usecase_id
+        required: true
+        type: integer
+      - description: Inference-object assignments
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Set Usecase Inference Objects
       tags:
       - Master Usecase
   /master/usecases/config:

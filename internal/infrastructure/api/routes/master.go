@@ -17,6 +17,9 @@ func MasterRouter(http fiber.Router, c *container.Container) {
 	routes.Post("/usecases", masterHandler.CreateUsecase(svc, c.GetValidator()))
 	routes.Get("/usecases/:usecase_id", masterHandler.ReadUsecase(svc))
 	routes.Put("/usecases/:usecase_id", masterHandler.UpdateUsecase(svc, c.GetValidator()))
+	routes.Post("/usecases/:usecase_id/inference-objects", masterHandler.SetInferenceObjects(svc, c.GetValidator()))
+	routes.Get("/usecases/:usecase_id/inference-objects", masterHandler.ReadInferenceObjects(svc))
+	routes.Put("/usecases/:usecase_id/inference-objects", masterHandler.SetInferenceObjects(svc, c.GetValidator()))
 
 	routes.Get("/models", masterHandler.ReadModels(svc))
 	routes.Post("/models", masterHandler.CreateModel(svc, c.GetValidator()))

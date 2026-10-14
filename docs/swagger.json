@@ -187,6 +187,50 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Creates the basic master usecase data. Inference-object assignments are configured separately.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Create Master Usecase",
+                "parameters": [
+                    {
+                        "description": "Usecase payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.CreateUsecaseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
             }
         },
         "/master/usecases/config": {
@@ -204,6 +248,200 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UsecasesWithConfigResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            }
+        },
+        "/master/usecases/{usecase_id}": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Update Master Usecase",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Usecase ID",
+                        "name": "usecase_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Usecase payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UpdateUsecaseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            }
+        },
+        "/master/usecases/{usecase_id}/inference-objects": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Get Usecase Inference Objects",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Usecase ID",
+                        "name": "usecase_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Creates or replaces all inference-object assignments for a usecase.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Set Usecase Inference Objects",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Usecase ID",
+                        "name": "usecase_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Inference-object assignments",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates or replaces all inference-object assignments for a usecase.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Set Usecase Inference Objects",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Usecase ID",
+                        "name": "usecase_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Inference-object assignments",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
                         }
                     },
                     "500": {
@@ -1993,6 +2231,74 @@
                 },
                 "phone": {
                     "type": "string"
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.CreateUsecaseRequest": {
+            "type": "object",
+            "required": [
+                "usecase_code",
+                "usecase_name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "usecase_code": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "usecase_name": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.InferenceObjectRequest": {
+            "type": "object",
+            "required": [
+                "inference_id",
+                "object_id"
+            ],
+            "properties": {
+                "inference_id": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "object_id": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.SetInferenceObjectsRequest": {
+            "type": "object",
+            "properties": {
+                "inference_objects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.InferenceObjectRequest"
+                    }
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.UpdateUsecaseRequest": {
+            "type": "object",
+            "required": [
+                "usecase_code",
+                "usecase_name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "usecase_code": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "usecase_name": {
+                    "type": "string",
+                    "maxLength": 255
                 }
             }
         },

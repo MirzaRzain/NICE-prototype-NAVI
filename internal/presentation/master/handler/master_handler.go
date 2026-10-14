@@ -73,6 +73,17 @@ func parseSourceTime(value string) (*time.Time, error) {
 	return &t, nil
 }
 
+// CreateUsecase godoc
+// @Summary      Create Master Usecase
+// @Description  Creates the basic master usecase data. Inference-object assignments are configured separately.
+// @Tags         Master Usecase
+// @Accept       json
+// @Produce      json
+// @Param        request  body  presenter.CreateUsecaseRequest  true  "Usecase payload"
+// @Success      201  {object}  response.DataPayload
+// @Failure      400  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases [post]
 func CreateUsecase(svc contract.MasterUseCase, validate *validator.Validator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var request presenter.CreateUsecaseRequest
@@ -90,6 +101,18 @@ func CreateUsecase(svc contract.MasterUseCase, validate *validator.Validator) fi
 	}
 }
 
+// UpdateUsecase godoc
+// @Summary      Update Master Usecase
+// @Tags         Master Usecase
+// @Accept       json
+// @Produce      json
+// @Param        usecase_id  path  int  true  "Usecase ID"
+// @Param        request  body  presenter.UpdateUsecaseRequest  true  "Usecase payload"
+// @Success      200  {object}  response.DataPayload
+// @Failure      400  {object}  response.ErrorPayload
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/{usecase_id} [put]
 func UpdateUsecase(svc contract.MasterUseCase, validate *validator.Validator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		usecaseID, err := pathID(c, "usecase_id")
@@ -302,6 +325,19 @@ func DeleteModel(svc contract.MasterUseCase) fiber.Handler {
 	}
 }
 
+// SetInferenceObjects godoc
+// @Summary      Set Usecase Inference Objects
+// @Description  Creates or replaces all inference-object assignments for a usecase.
+// @Tags         Master Usecase
+// @Accept       json
+// @Produce      json
+// @Param        usecase_id  path  int  true  "Usecase ID"
+// @Param        request  body  presenter.SetInferenceObjectsRequest  true  "Inference-object assignments"
+// @Success      200  {object}  response.DataPayload
+// @Failure      400  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/{usecase_id}/inference-objects [put]
+// @Router       /master/usecases/{usecase_id}/inference-objects [post]
 func SetInferenceObjects(svc contract.MasterUseCase, validate *validator.Validator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		usecaseID, err := pathID(c, "usecase_id")
@@ -326,6 +362,14 @@ func SetInferenceObjects(svc contract.MasterUseCase, validate *validator.Validat
 	}
 }
 
+// ReadInferenceObjects godoc
+// @Summary      Get Usecase Inference Objects
+// @Tags         Master Usecase
+// @Produce      json
+// @Param        usecase_id  path  int  true  "Usecase ID"
+// @Success      200  {object}  response.DataPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/{usecase_id}/inference-objects [get]
 func ReadInferenceObjects(svc contract.MasterUseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		usecaseID, err := pathID(c, "usecase_id")
