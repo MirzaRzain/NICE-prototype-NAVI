@@ -163,6 +163,58 @@
                 }
             }
         },
+        "/master/usecases": {
+            "get": {
+                "description": "Returns the active usecases with their IDs, codes, and names.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Get Usecase List",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UsecaseListResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            }
+        },
+        "/master/usecases/config": {
+            "get": {
+                "description": "Returns all active usecases and their key-value configurations.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Master Usecase"
+                ],
+                "summary": "Get Usecases With Config",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UsecasesWithConfigResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload"
+                        }
+                    }
+                }
+            }
+        },
         "/menus": {
             "get": {
                 "description": "Retrieves a paginated and searchable list of all menus in the system.",
@@ -1845,17 +1897,58 @@
         }
     },
     "definitions": {
+        "be-dashboard-nba_internal_domain_model.UsecaseConfigItem": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "be-dashboard-nba_internal_domain_model.UsecaseListItem": {
+            "type": "object",
+            "properties": {
+                "usecase_code": {
+                    "type": "string"
+                },
+                "usecase_id": {
+                    "type": "integer"
+                },
+                "usecase_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "be-dashboard-nba_internal_domain_model.UsecaseWithConfig": {
+            "type": "object",
+            "properties": {
+                "usecase_code": {
+                    "type": "string"
+                },
+                "usecase_config": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/be-dashboard-nba_internal_domain_model.UsecaseConfigItem"
+                    }
+                },
+                "usecase_id": {
+                    "type": "integer"
+                },
+                "usecase_name": {
+                    "type": "string"
+                }
+            }
+        },
         "be-dashboard-nba_internal_presentation_auth_presenter.LoginRequest": {
             "type": "object",
             "required": [
-                "email",
-                "password"
+                "pin"
             ],
             "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
+                "pin": {
                     "type": "string"
                 }
             }
@@ -1899,6 +1992,40 @@
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.UsecaseListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/be-dashboard-nba_internal_domain_model.UsecaseListItem"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "be-dashboard-nba_internal_presentation_master_presenter.UsecasesWithConfigResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/be-dashboard-nba_internal_domain_model.UsecaseWithConfig"
+                    }
+                },
+                "message": {
                     "type": "string"
                 }
             }

@@ -27,6 +27,24 @@ type MasterUsecase struct {
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
 }
 
+type UsecaseListItem struct {
+	UsecaseID   int64  `json:"usecase_id"`
+	UsecaseCode string `json:"usecase_code"`
+	UsecaseName string `json:"usecase_name"`
+}
+
+type UsecaseConfigItem struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+type UsecaseWithConfig struct {
+	UsecaseID     int64               `json:"usecase_id"`
+	UsecaseCode   string              `json:"usecase_code"`
+	UsecaseName   string              `json:"usecase_name"`
+	UsecaseConfig []UsecaseConfigItem `json:"usecase_config"`
+}
+
 type MasterModel struct {
 	ID        int64      `json:"id"`
 	FileURL   string     `json:"file_url"`

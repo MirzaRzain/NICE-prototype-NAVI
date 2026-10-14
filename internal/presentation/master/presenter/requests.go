@@ -4,9 +4,22 @@ import (
 	"encoding/json"
 
 	"be-dashboard-nba/internal/application/utils"
+	"be-dashboard-nba/internal/domain/model"
 )
 
 type ReadSourcesRequest struct{ utils.PaginationPayload }
+
+type UsecaseListResponse struct {
+	Code    int                     `json:"code"`
+	Data    []model.UsecaseListItem `json:"data"`
+	Message string                  `json:"message"`
+}
+
+type UsecasesWithConfigResponse struct {
+	Code    int                       `json:"code"`
+	Data    []model.UsecaseWithConfig `json:"data"`
+	Message string                    `json:"message"`
+}
 
 type CreateUsecaseRequest struct {
 	UsecaseName string  `json:"usecase_name" validate:"required,max=255"`

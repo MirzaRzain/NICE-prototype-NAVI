@@ -9,6 +9,8 @@ import (
 
 type MasterRepository interface {
 	ReadUsecases(ctx context.Context) ([]model.MasterUsecase, error)
+	ReadUsecaseList(ctx context.Context) ([]model.UsecaseListItem, error)
+	ReadUsecasesWithConfig(ctx context.Context) ([]model.UsecaseWithConfig, error)
 	ReadUsecase(ctx context.Context, id int64) (model.MasterUsecase, error)
 	CreateUsecase(ctx context.Context, usecase model.MasterUsecase, userID string) (model.MasterUsecase, error)
 	UpdateUsecase(ctx context.Context, usecase model.MasterUsecase, userID string) error

@@ -113,13 +113,39 @@ func UpdateUsecase(svc contract.MasterUseCase, validate *validator.Validator) fi
 	}
 }
 
+// ReadUsecases godoc
+// @Summary      Get Usecase List
+// @Description  Returns the active usecases with their IDs, codes, and names.
+// @Tags         Master Usecase
+// @Produce      json
+// @Success      200  {object}  presenter.UsecaseListResponse
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases [get]
 func ReadUsecases(svc contract.MasterUseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		data, err := svc.ReadUsecases(c.UserContext())
+		data, err := svc.ReadUsecaseList(c.UserContext())
 		if err != nil {
 			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get master usecases"})
 		}
 		return response.Data(c, response.DataPayload{Code: http.StatusOK, Data: data, Message: "Successfully get master usecases"})
+	}
+}
+
+// ReadUsecasesWithConfig godoc
+// @Summary      Get Usecases With Config
+// @Description  Returns all active usecases and their key-value configurations.
+// @Tags         Master Usecase
+// @Produce      json
+// @Success      200  {object}  presenter.UsecasesWithConfigResponse
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/config [get]
+func ReadUsecasesWithConfig(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		data, err := svc.ReadUsecasesWithConfig(c.UserContext())
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get usecases with config"})
+		}
+		return response.Data(c, response.DataPayload{Code: http.StatusOK, Data: data, Message: "Successfully get usecases with config"})
 	}
 }
 

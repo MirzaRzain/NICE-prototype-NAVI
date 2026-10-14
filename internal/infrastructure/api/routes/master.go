@@ -13,6 +13,7 @@ func MasterRouter(http fiber.Router, c *container.Container) {
 	routes := http.Group("/master")
 
 	routes.Get("/usecases", masterHandler.ReadUsecases(svc))
+	routes.Get("/usecases/config", masterHandler.ReadUsecasesWithConfig(svc))
 	routes.Post("/usecases", masterHandler.CreateUsecase(svc, c.GetValidator()))
 	routes.Get("/usecases/:usecase_id", masterHandler.ReadUsecase(svc))
 	routes.Put("/usecases/:usecase_id", masterHandler.UpdateUsecase(svc, c.GetValidator()))

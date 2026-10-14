@@ -10,6 +10,8 @@ import (
 
 type MasterUseCase interface {
 	ReadUsecases(ctx context.Context) ([]model.MasterUsecase, error)
+	ReadUsecaseList(ctx context.Context) ([]model.UsecaseListItem, error)
+	ReadUsecasesWithConfig(ctx context.Context) ([]model.UsecaseWithConfig, error)
 	ReadUsecase(ctx context.Context, id int64) (model.MasterUsecase, error)
 	CreateUsecase(ctx context.Context, request presenter.CreateUsecaseRequest, userID string) (model.MasterUsecase, error)
 	UpdateUsecase(ctx context.Context, usecaseID int64, request presenter.UpdateUsecaseRequest, userID string) error

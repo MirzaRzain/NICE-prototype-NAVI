@@ -29,6 +29,14 @@ func (s *useCase) ReadUsecases(ctx context.Context) ([]model.MasterUsecase, erro
 	return s.newMasterRepo(s.db).ReadUsecases(ctx)
 }
 
+func (s *useCase) ReadUsecaseList(ctx context.Context) ([]model.UsecaseListItem, error) {
+	return s.newMasterRepo(s.db).ReadUsecaseList(ctx)
+}
+
+func (s *useCase) ReadUsecasesWithConfig(ctx context.Context) ([]model.UsecaseWithConfig, error) {
+	return s.newMasterRepo(s.db).ReadUsecasesWithConfig(ctx)
+}
+
 func (s *useCase) ReadUsecase(ctx context.Context, id int64) (model.MasterUsecase, error) {
 	return s.newMasterRepo(s.db).ReadUsecase(ctx, id)
 }

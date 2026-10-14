@@ -1,13 +1,39 @@
 definitions:
+  be-dashboard-nba_internal_domain_model.UsecaseConfigItem:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+  be-dashboard-nba_internal_domain_model.UsecaseListItem:
+    properties:
+      usecase_code:
+        type: string
+      usecase_id:
+        type: integer
+      usecase_name:
+        type: string
+    type: object
+  be-dashboard-nba_internal_domain_model.UsecaseWithConfig:
+    properties:
+      usecase_code:
+        type: string
+      usecase_config:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_domain_model.UsecaseConfigItem'
+        type: array
+      usecase_id:
+        type: integer
+      usecase_name:
+        type: string
+    type: object
   be-dashboard-nba_internal_presentation_auth_presenter.LoginRequest:
     properties:
-      email:
-        type: string
-      password:
+      pin:
         type: string
     required:
-    - email
-    - password
+    - pin
     type: object
   be-dashboard-nba_internal_presentation_auth_presenter.SessionResponse:
     properties:
@@ -35,6 +61,28 @@ definitions:
       name:
         type: string
       phone:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_master_presenter.UsecaseListResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_domain_model.UsecaseListItem'
+        type: array
+      message:
+        type: string
+    type: object
+  be-dashboard-nba_internal_presentation_master_presenter.UsecasesWithConfigResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/be-dashboard-nba_internal_domain_model.UsecaseWithConfig'
+        type: array
+      message:
         type: string
     type: object
   be-dashboard-nba_internal_presentation_menu_menu-permission_presenter.CreateMenuPermissionRequest:
@@ -487,6 +535,40 @@ paths:
       summary: Get Current User Profile
       tags:
       - Authentication
+  /master/usecases:
+    get:
+      description: Returns the active usecases with their IDs, codes, and names.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UsecaseListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get Usecase List
+      tags:
+      - Master Usecase
+  /master/usecases/config:
+    get:
+      description: Returns all active usecases and their key-value configurations.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_master_presenter.UsecasesWithConfigResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get Usecases With Config
+      tags:
+      - Master Usecase
   /menus:
     get:
       description: Retrieves a paginated and searchable list of all menus in the system.

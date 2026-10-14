@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS usecase_config (id INTEGER PRIMARY KEY AUTOINCREMENT, usecase_id INTEGER NOT NULL REFERENCES master_usecase(id) ON DELETE CASCADE, key TEXT NOT NULL, value TEXT NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, created_by TEXT, updated_at DATETIME, updated_by TEXT, deleted_at DATETIME, deleted_by TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sqlite_usecase_config_active ON usecase_config(usecase_id, key) WHERE deleted_at IS NULL;
