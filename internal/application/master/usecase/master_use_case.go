@@ -45,6 +45,10 @@ func (s *useCase) ReadModels(ctx context.Context) ([]model.MasterModel, error) {
 	return s.newMasterRepo(s.db).ReadModels(ctx)
 }
 
+func (s *useCase) ReadModelsByUsecaseCode(ctx context.Context, code string) ([]model.MasterModel, error) {
+	return s.newMasterRepo(s.db).ReadModelsByUsecaseCode(ctx, code)
+}
+
 func (s *useCase) ReadModel(ctx context.Context, id int64) (model.MasterModel, error) {
 	return s.newMasterRepo(s.db).ReadModel(ctx, id)
 }
@@ -53,12 +57,18 @@ func (s *useCase) ReadModelByUsecaseCode(ctx context.Context, code string) (mode
 	return s.newMasterRepo(s.db).ReadModelByUsecaseCode(ctx, code)
 }
 
+func (s *useCase) ReadModelByInferenceObjectID(ctx context.Context, inferenceObjectID int64) (model.MasterModel, error) {
+	return s.newMasterRepo(s.db).ReadModelByInferenceObjectID(ctx, inferenceObjectID)
+}
+
 func (s *useCase) CreateModel(ctx context.Context, request presenter.CreateModelRequest) (model.MasterModel, error) {
-	return s.newMasterRepo(s.db).CreateModel(ctx, model.MasterModel{FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Code: request.Code, Size: request.Size, UsecaseID: request.UsecaseID})
+	mappingID := request.UsecaseInferenceObjectID
+	return s.newMasterRepo(s.db).CreateModel(ctx, model.MasterModel{FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, UsecaseInferenceObjectID: &mappingID})
 }
 
 func (s *useCase) UpdateModel(ctx context.Context, id int64, request presenter.UpdateModelRequest) error {
-	err := s.newMasterRepo(s.db).UpdateModel(ctx, model.MasterModel{ID: id, FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Code: request.Code, Size: request.Size, UsecaseID: request.UsecaseID})
+	mappingID := request.UsecaseInferenceObjectID
+	err := s.newMasterRepo(s.db).UpdateModel(ctx, model.MasterModel{ID: id, FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, UsecaseInferenceObjectID: &mappingID})
 	if errors.Is(err, sql.ErrNoRows) {
 		return constant.ErrDataNotFound
 	}

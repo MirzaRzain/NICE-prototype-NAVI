@@ -189,6 +189,13 @@ func ReadUsecase(svc contract.MasterUseCase) fiber.Handler {
 	}
 }
 
+// ReadModels godoc
+// @Summary      Get Master Models
+// @Tags         Master Model
+// @Produce      json
+// @Success      200  {object}  response.DataPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models [get]
 func ReadModels(svc contract.MasterUseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		data, err := svc.ReadModels(c.UserContext())
@@ -199,6 +206,37 @@ func ReadModels(svc contract.MasterUseCase) fiber.Handler {
 	}
 }
 
+// ReadModelsByUsecaseCode godoc
+// @Summary      Get Models By Usecase Code
+// @Tags         Master Model
+// @Produce      json
+// @Param        usecase_code  path  string  true  "Usecase code"
+// @Success      200  {object}  response.DataPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/{usecase_code}/models [get]
+func ReadModelsByUsecaseCode(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		code := strings.TrimSpace(c.Params("usecase_code"))
+		if code == "" {
+			return fiber.NewError(http.StatusBadRequest, "Invalid usecase_code")
+		}
+		data, err := svc.ReadModelsByUsecaseCode(c.UserContext(), code)
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get models by usecase"})
+		}
+		return response.Data(c, response.DataPayload{Code: http.StatusOK, Data: data, Message: "Successfully get models by usecase"})
+	}
+}
+
+// ReadModel godoc
+// @Summary      Get Master Model
+// @Tags         Master Model
+// @Produce      json
+// @Param        model_id  path  int  true  "Model ID"
+// @Success      200  {object}  response.DataPayload
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models/{model_id} [get]
 func ReadModel(svc contract.MasterUseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := pathID(c, "model_id")
@@ -216,6 +254,22 @@ func ReadModel(svc contract.MasterUseCase) fiber.Handler {
 	}
 }
 
+// CreateModel godoc
+// @Summary      Create Master Model
+// @Description  Upload a model and attach it to one usecase-inference-object mapping.
+// @Tags         Master Model
+// @Accept       multipart/form-data
+// @Produce      json
+// @Param        file  formData  file  true  "Model file"
+// @Param        name  formData  string  true  "Model display name"
+// @Param        model_name  formData  string  true  "Model name"
+// @Param        version  formData  string  true  "Model version"
+// @Param        code  formData  string  true  "Model code"
+// @Param        usecase_inference_object_id  formData  int  true  "Usecase inference-object mapping ID"
+// @Success      201  {object}  response.DataPayload
+// @Failure      400  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models [post]
 func CreateModel(svc contract.MasterUseCase, validate *validator.Validator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		file, err := c.FormFile("file")
@@ -226,10 +280,11 @@ func CreateModel(svc contract.MasterUseCase, validate *validator.Validator) fibe
 			FileURL:   modelFileName(file.Filename),
 			Name:      c.FormValue("name"),
 			ModelName: c.FormValue("model_name"),
+			Version:   c.FormValue("version"),
 			Code:      c.FormValue("code"),
 			Size:      file.Size,
 		}
-		request.UsecaseID, _ = strconv.ParseInt(c.FormValue("usecase_id"), 10, 64)
+		request.UsecaseInferenceObjectID, _ = strconv.ParseInt(c.FormValue("usecase_inference_object_id"), 10, 64)
 		if err := validate.Validate(request); err != nil {
 			return response.ErrorValidate(c, err)
 		}
@@ -273,6 +328,68 @@ func DownloadModel(svc contract.MasterUseCase) fiber.Handler {
 	}
 }
 
+// DownloadModelByID godoc
+// @Summary      Download Model By ID
+// @Tags         Master Model
+// @Produce      application/octet-stream
+// @Param        model_id  path  int  true  "Model ID"
+// @Success      200  {file}  binary
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models/{model_id}/download [get]
+func DownloadModelByID(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		id, err := pathID(c, "model_id")
+		if err != nil {
+			return err
+		}
+		data, err := svc.ReadModel(c.UserContext(), id)
+		if errors.Is(err, sql.ErrNoRows) {
+			return response.Error(c, response.ErrorParam{Code: http.StatusNotFound, Message: "Model not found"})
+		}
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get model"})
+		}
+		path := filepath.Join(modelStorageDir(), filepath.Base(data.FileURL))
+		if _, err = os.Stat(path); err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusNotFound, Message: "Model file not found"})
+		}
+		c.Attachment(data.Name + filepath.Ext(path))
+		return c.SendFile(path, true)
+	}
+}
+
+// DownloadModelByInferenceObject godoc
+// @Summary      Download Model By Inference Object
+// @Tags         Master Model
+// @Produce      application/octet-stream
+// @Param        inference_object_id  path  int  true  "Usecase inference-object mapping ID"
+// @Success      200  {file}  binary
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models/download/inference-object/{inference_object_id} [get]
+func DownloadModelByInferenceObject(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		id, err := pathID(c, "inference_object_id")
+		if err != nil {
+			return err
+		}
+		data, err := svc.ReadModelByInferenceObjectID(c.UserContext(), id)
+		if errors.Is(err, sql.ErrNoRows) {
+			return response.Error(c, response.ErrorParam{Code: http.StatusNotFound, Message: "Model not found"})
+		}
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get model"})
+		}
+		path := filepath.Join(modelStorageDir(), filepath.Base(data.FileURL))
+		if _, err = os.Stat(path); err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusNotFound, Message: "Model file not found"})
+		}
+		c.Attachment(data.Name + filepath.Ext(path))
+		return c.SendFile(path, true)
+	}
+}
+
 func modelStorageDir() string {
 	if dir := strings.TrimSpace(os.Getenv("MODEL_STORAGE_DIR")); dir != "" {
 		return dir
@@ -288,6 +405,23 @@ func modelFileName(original string) string {
 	return uuid.NewString() + strings.ToLower(ext)
 }
 
+// UpdateModel godoc
+// @Summary      Update Master Model
+// @Tags         Master Model
+// @Accept       multipart/form-data
+// @Produce      json
+// @Param        model_id  path  int  true  "Model ID"
+// @Param        file  formData  file  false  "Model file"
+// @Param        name  formData  string  true  "Model display name"
+// @Param        model_name  formData  string  true  "Model name"
+// @Param        version  formData  string  true  "Model version"
+// @Param        code  formData  string  true  "Model code"
+// @Param        usecase_inference_object_id  formData  int  true  "Usecase inference-object mapping ID"
+// @Success      200  {object}  response.DataPayload
+// @Failure      400  {object}  response.ErrorPayload
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models/{model_id} [put]
 func UpdateModel(svc contract.MasterUseCase, validate *validator.Validator) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := pathID(c, "model_id")

@@ -15,6 +15,7 @@ func MasterRouter(http fiber.Router, c *container.Container) {
 	routes.Get("/usecases", masterHandler.ReadUsecases(svc))
 	routes.Get("/usecases/config", masterHandler.ReadUsecasesWithConfig(svc))
 	routes.Post("/usecases", masterHandler.CreateUsecase(svc, c.GetValidator()))
+	routes.Get("/usecases/:usecase_code/models", masterHandler.ReadModelsByUsecaseCode(svc))
 	routes.Get("/usecases/:usecase_id", masterHandler.ReadUsecase(svc))
 	routes.Put("/usecases/:usecase_id", masterHandler.UpdateUsecase(svc, c.GetValidator()))
 	routes.Post("/usecases/:usecase_id/inference-objects", masterHandler.SetInferenceObjects(svc, c.GetValidator()))
@@ -23,7 +24,9 @@ func MasterRouter(http fiber.Router, c *container.Container) {
 
 	routes.Get("/models", masterHandler.ReadModels(svc))
 	routes.Post("/models", masterHandler.CreateModel(svc, c.GetValidator()))
+	routes.Get("/models/:model_id/download", masterHandler.DownloadModelByID(svc))
 	routes.Get("/models/download/:usecase_code", masterHandler.DownloadModel(svc))
+	routes.Get("/models/download/inference-object/:inference_object_id", masterHandler.DownloadModelByInferenceObject(svc))
 	routes.Get("/models/:model_id", masterHandler.ReadModel(svc))
 	routes.Put("/models/:model_id", masterHandler.UpdateModel(svc, c.GetValidator()))
 	routes.Delete("/models/:model_id", masterHandler.DeleteModel(svc))

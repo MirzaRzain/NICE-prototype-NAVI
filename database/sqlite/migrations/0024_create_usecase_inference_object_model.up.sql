@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS usecase_inference_object_model (id INTEGER PRIMARY KEY AUTOINCREMENT, model_id INTEGER NOT NULL REFERENCES master_model(id) ON DELETE CASCADE, usecase_inference_object_id INTEGER NOT NULL REFERENCES usecase_inference_object(id) ON DELETE CASCADE, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME, deleted_at DATETIME);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sqlite_model_inference_object_active ON usecase_inference_object_model(model_id) WHERE deleted_at IS NULL;

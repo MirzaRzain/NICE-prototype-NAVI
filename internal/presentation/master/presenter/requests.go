@@ -30,12 +30,13 @@ type CreateUsecaseRequest struct {
 type UpdateUsecaseRequest = CreateUsecaseRequest
 
 type CreateModelRequest struct {
-	FileURL   string `json:"file_url"`
-	Name      string `json:"name" validate:"required,max=255"`
-	ModelName string `json:"model_name" validate:"required,max=255"`
-	Code      string `json:"code" validate:"required,max=255"`
-	Size      int64  `json:"size" validate:"min=0"`
-	UsecaseID int64  `json:"usecase_id" validate:"required,min=1"`
+	FileURL                  string `json:"file_url"`
+	Name                     string `json:"name" validate:"required,max=255"`
+	ModelName                string `json:"model_name" validate:"required,max=255"`
+	Version                  string `json:"version" validate:"required,max=50"`
+	Code                     string `json:"code" validate:"required,max=255"`
+	Size                     int64  `json:"size" validate:"min=0"`
+	UsecaseInferenceObjectID int64  `json:"usecase_inference_object_id" validate:"required,min=1"`
 }
 
 type UpdateModelRequest = CreateModelRequest

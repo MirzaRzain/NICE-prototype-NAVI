@@ -582,6 +582,177 @@ paths:
       summary: Get Current User Profile
       tags:
       - Authentication
+  /master/models:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get Master Models
+      tags:
+      - Master Model
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a model and attach it to one usecase-inference-object mapping.
+      parameters:
+      - description: Model file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Model display name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Model name
+        in: formData
+        name: model_name
+        required: true
+        type: string
+      - description: Model code
+        in: formData
+        name: code
+        required: true
+        type: string
+      - description: Usecase inference-object mapping ID
+        in: formData
+        name: usecase_inference_object_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Create Master Model
+      tags:
+      - Master Model
+  /master/models/{model_id}:
+    get:
+      parameters:
+      - description: Model ID
+        in: path
+        name: model_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Get Master Model
+      tags:
+      - Master Model
+    put:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Model ID
+        in: path
+        name: model_id
+        required: true
+        type: integer
+      - description: Model file
+        in: formData
+        name: file
+        type: file
+      - description: Model display name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Model name
+        in: formData
+        name: model_name
+        required: true
+        type: string
+      - description: Model code
+        in: formData
+        name: code
+        required: true
+        type: string
+      - description: Usecase inference-object mapping ID
+        in: formData
+        name: usecase_inference_object_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.DataPayload'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Update Master Model
+      tags:
+      - Master Model
+  /master/models/download/inference-object/{inference_object_id}:
+    get:
+      parameters:
+      - description: Usecase inference-object mapping ID
+        in: path
+        name: inference_object_id
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/be-dashboard-nba_internal_presentation_response.ErrorPayload'
+      summary: Download Model By Inference Object
+      tags:
+      - Master Model
   /master/usecases:
     get:
       description: Returns the active usecases with their IDs, codes, and names.

@@ -101,6 +101,8 @@ Container aplikasi bind ke `0.0.0.0` dan PostgreSQL hanya diperlukan oleh contai
 
 Dokumentasi handoff frontend untuk Master Source tersedia di [docs/frontend-handoff-master-source.md](docs/frontend-handoff-master-source.md).
 
+Dokumentasi handoff API untuk integrasi frontend tersedia di [docs/api-handoff.md](docs/api-handoff.md).
+
 ## Swagger
 
 Swagger UI is enabled with `SWAGGER_ENABLED=true`.

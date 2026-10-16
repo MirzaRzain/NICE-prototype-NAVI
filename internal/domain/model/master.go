@@ -46,15 +46,17 @@ type UsecaseWithConfig struct {
 }
 
 type MasterModel struct {
-	ID        int64      `json:"id"`
-	FileURL   string     `json:"file_url"`
-	Name      string     `json:"name"`
-	ModelName string     `json:"model_name"`
-	Code      string     `json:"code"`
-	Size      int64      `json:"size"`
-	UsecaseID int64      `json:"usecase_id"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	ID                       int64      `json:"id"`
+	FileURL                  string     `json:"file_url"`
+	Name                     string     `json:"name"`
+	ModelName                string     `json:"model_name"`
+	Version                  string     `json:"version"`
+	Code                     string     `json:"code"`
+	Size                     int64      `json:"size"`
+	UsecaseID                int64      `json:"usecase_id"`
+	UsecaseInferenceObjectID *int64     `json:"usecase_inference_object_id,omitempty"`
+	CreatedAt                time.Time  `json:"created_at"`
+	UpdatedAt                *time.Time `json:"updated_at,omitempty"`
 }
 
 type InferenceObjectAssignment struct {

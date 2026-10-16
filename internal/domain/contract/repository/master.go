@@ -15,8 +15,10 @@ type MasterRepository interface {
 	CreateUsecase(ctx context.Context, usecase model.MasterUsecase, userID string) (model.MasterUsecase, error)
 	UpdateUsecase(ctx context.Context, usecase model.MasterUsecase, userID string) error
 	ReadModels(ctx context.Context) ([]model.MasterModel, error)
+	ReadModelsByUsecaseCode(ctx context.Context, code string) ([]model.MasterModel, error)
 	ReadModel(ctx context.Context, id int64) (model.MasterModel, error)
 	ReadModelByUsecaseCode(ctx context.Context, code string) (model.MasterModel, error)
+	ReadModelByInferenceObjectID(ctx context.Context, inferenceObjectID int64) (model.MasterModel, error)
 	CreateModel(ctx context.Context, item model.MasterModel) (model.MasterModel, error)
 	UpdateModel(ctx context.Context, item model.MasterModel) error
 	DeleteModel(ctx context.Context, id int64) error

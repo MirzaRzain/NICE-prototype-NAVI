@@ -2,12 +2,14 @@
 
 Base URL local: `http://127.0.0.1:8008/api/v1`
 
-Semua endpoint selain login memakai:
+Pada runtime saat ini, login tidak memakai token. Endpoint yang membutuhkan session memakai:
 
 ```http
 Authorization: Bearer <access_token>
 Content-Type: application/json
 ```
+
+Catatan implementasi: `/auth/logout` wajib Bearer token. Route `/master/*` dan capture yang saat ini aktif belum memasang middleware token, sehingga frontend tidak perlu mengirim Bearer untuk endpoint tersebut.
 
 ## Response
 

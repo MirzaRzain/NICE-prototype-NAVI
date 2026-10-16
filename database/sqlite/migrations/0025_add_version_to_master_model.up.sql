@@ -1,0 +1,2 @@
+ALTER TABLE master_model
+    ADD COLUMN version TEXT NOT NULL DEFAULT '1.0.0';
