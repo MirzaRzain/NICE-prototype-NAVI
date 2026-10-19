@@ -16,9 +16,12 @@ import (
 	"be-dashboard-nba/internal/presentation/middleware"
 )
 
+const maxRequestBodySize = 300 * 1024 * 1024
+
 func RunFiberServer(ctx context.Context, c *container.Container, cfg *runtime.Config) error {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
+		BodyLimit:             maxRequestBodySize,
 		ErrorHandler:          errorHandler(),
 	})
 

@@ -618,6 +618,11 @@ paths:
         name: model_name
         required: true
         type: string
+      - description: Model version
+        in: formData
+        name: version
+        required: true
+        type: string
       - description: Model code
         in: formData
         name: code
@@ -693,6 +698,11 @@ paths:
       - description: Model name
         in: formData
         name: model_name
+        required: true
+        type: string
+      - description: Model version
+        in: formData
+        name: version
         required: true
         type: string
       - description: Model code

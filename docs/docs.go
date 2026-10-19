@@ -231,6 +231,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "Model version",
+                        "name": "version",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Model code",
                         "name": "code",
                         "in": "formData",
@@ -381,6 +388,13 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Model name",
                         "name": "model_name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Model version",
+                        "name": "version",
                         "in": "formData",
                         "required": true
                     },
