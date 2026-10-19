@@ -83,6 +83,19 @@ Membatalkan session aktif dan membutuhkan Bearer token. Response sukses mengguna
 
 ## Master Usecase
 
+## Tiga API utama frontend
+
+Kontrak utama frontend untuk pemilihan dan pengambilan model:
+
+1. `GET /master/usecases/:usecase_code/models`
+   Backend mencari usecase berdasarkan `usecase_code`, mengambil seluruh `inference_object` yang terhubung ke usecase tersebut, lalu mengembalikan semua model yang terhubung ke inference-object tersebut melalui `model_inference_object`.
+2. `GET /master/models/download/:usecase_code`
+   Backend memakai resolusi usecase/inference-object yang sama dan mengunduh model terbaru yang tersedia untuk usecase tersebut.
+3. `GET /master/usecases`
+   Mengembalikan daftar aktif dengan field `usecase_id`, `usecase_name`, dan `usecase_code`.
+
+Endpoint download berdasarkan `model_id` dan `inference_object_id` tetap tersedia untuk kompatibilitas, tetapi bukan alur utama frontend.
+
 ### GET `/master/usecases`
 
 Daftar usecase aktif:
@@ -129,7 +142,7 @@ Body sama dengan create. Response `200` mengembalikan `data: null`.
 
 ### GET `/master/usecases/:usecase_id/inference-objects`
 
-Preview assignment inference-object. Item berisi `id`, `inference_id`, `object_id`, `inference_name`, `inference_code`, `object_name`, dan `object_code`.
+Preview assignment inference-object. Item berisi `id` sebagai mapping usecase, serta `inference_object_id` sebagai ID kombinasi global yang dipakai saat assign model.
 
 ### POST/PUT `/master/usecases/:usecase_id/inference-objects`
 
@@ -154,7 +167,7 @@ Mengambil seluruh model tersimpan. Untuk kebutuhan frontend berdasarkan usecase,
 
 ### GET `/master/usecases/:usecase_code/models`
 
-Mengambil list model berdasarkan `usecase_code`. Model tetap membawa `usecase_id` dan `usecase_inference_object_id` agar frontend dapat mengetahui mapping inference-object-nya.
+Mengambil semua model yang terhubung ke kombinasi inference-object yang dipakai usecase tersebut. Model yang sama dapat muncul pada beberapa usecase.
 
 Contoh response:
 
@@ -170,8 +183,13 @@ Contoh response:
       "version": "v1.0.0",
       "code": "YOLOV8N",
       "size": 12345678,
-      "usecase_id": 1,
-      "usecase_inference_object_id": 10,
+      "inference_object_id": 10,
+      "inference_id": 1,
+      "object_id": 2,
+      "inference_name": "Detection",
+      "inference_code": "detection",
+      "object_name": "Person",
+      "object_code": "person",
       "created_at": "2026-10-16T10:00:00Z"
     }
   ],
@@ -198,7 +216,7 @@ Gunakan `multipart/form-data`:
 | `model_name` | string | Ya |
 | `version` | string | Ya |
 | `code` | string | Ya |
-| `usecase_inference_object_id` | integer | Ya |
+| `inference_object_ids` | string | Ya, comma-separated |
 
 Response `201` mengembalikan object model.
 
@@ -214,7 +232,7 @@ Handler saat ini membaca body JSON:
   "version": "v1.0.0",
   "code": "YOLOV8N",
   "size": 12345678,
-  "usecase_inference_object_id": 10
+  "inference_object_ids": [10, 11]
 }
 ```
 

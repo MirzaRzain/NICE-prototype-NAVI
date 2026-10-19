@@ -113,9 +113,11 @@ func (r *repo) SetUsecaseInferenceObjects(ctx context.Context, usecaseID int64, 
 	if _, err = tx.ExecContext(ctx, `DELETE FROM usecase_inference_object WHERE usecase_id=$1`, usecaseID); err != nil {
 		return rollback(err)
 	}
-	const insert = `INSERT INTO usecase_inference_object (usecase_id, inference_id, object_id, created_by, created_at) VALUES ($1,$2,$3,$4,CURRENT_TIMESTAMP)`
 	for _, assignment := range assignments {
-		if _, err = tx.ExecContext(ctx, insert, usecaseID, assignment.InferenceID, assignment.ObjectID, userID); err != nil {
+		if _, err = tx.ExecContext(ctx, `INSERT INTO master_inference_object (inference_id, object_id, created_at) VALUES ($1,$2,CURRENT_TIMESTAMP) ON CONFLICT (inference_id, object_id) DO NOTHING`, assignment.InferenceID, assignment.ObjectID); err != nil {
+			return rollback(err)
+		}
+		if _, err = tx.ExecContext(ctx, `INSERT INTO usecase_inference_object (usecase_id, inference_id, object_id, inference_object_id, created_by, created_at) SELECT $1, $2, $3, mio.id, $4, CURRENT_TIMESTAMP FROM master_inference_object mio WHERE mio.inference_id=$2 AND mio.object_id=$3`, usecaseID, assignment.InferenceID, assignment.ObjectID, userID); err != nil {
 			return rollback(err)
 		}
 	}

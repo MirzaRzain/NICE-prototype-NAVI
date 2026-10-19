@@ -46,27 +46,34 @@ type UsecaseWithConfig struct {
 }
 
 type MasterModel struct {
-	ID                       int64      `json:"id"`
-	FileURL                  string     `json:"file_url"`
-	Name                     string     `json:"name"`
-	ModelName                string     `json:"model_name"`
-	Version                  string     `json:"version"`
-	Code                     string     `json:"code"`
-	Size                     int64      `json:"size"`
-	UsecaseID                int64      `json:"usecase_id"`
-	UsecaseInferenceObjectID *int64     `json:"usecase_inference_object_id,omitempty"`
-	CreatedAt                time.Time  `json:"created_at"`
-	UpdatedAt                *time.Time `json:"updated_at,omitempty"`
+	ID                 int64      `json:"id"`
+	FileURL            string     `json:"file_url"`
+	Name               string     `json:"name"`
+	ModelName          string     `json:"model_name"`
+	Version            string     `json:"version"`
+	Code               string     `json:"code"`
+	Size               int64      `json:"size"`
+	InferenceObjectID  *int64     `json:"inference_object_id,omitempty"`
+	InferenceID        *int64     `json:"inference_id,omitempty"`
+	ObjectID           *int64     `json:"object_id,omitempty"`
+	InferenceName      string     `json:"inference_name,omitempty"`
+	InferenceCode      string     `json:"inference_code,omitempty"`
+	ObjectName         string     `json:"object_name,omitempty"`
+	ObjectCode         string     `json:"object_code,omitempty"`
+	InferenceObjectIDs []int64    `json:"-"`
+	CreatedAt          time.Time  `json:"created_at"`
+	UpdatedAt          *time.Time `json:"updated_at,omitempty"`
 }
 
 type InferenceObjectAssignment struct {
-	ID            int64  `json:"id,omitempty"`
-	InferenceID   int64  `json:"inference_id"`
-	ObjectID      int64  `json:"object_id"`
-	InferenceName string `json:"inference_name,omitempty"`
-	InferenceCode string `json:"inference_code,omitempty"`
-	ObjectName    string `json:"object_name,omitempty"`
-	ObjectCode    string `json:"object_code,omitempty"`
+	ID                int64  `json:"id,omitempty"`
+	InferenceObjectID int64  `json:"inference_object_id"`
+	InferenceID       int64  `json:"inference_id"`
+	ObjectID          int64  `json:"object_id"`
+	InferenceName     string `json:"inference_name,omitempty"`
+	InferenceCode     string `json:"inference_code,omitempty"`
+	ObjectName        string `json:"object_name,omitempty"`
+	ObjectCode        string `json:"object_code,omitempty"`
 }
 
 type MasterCamera struct {

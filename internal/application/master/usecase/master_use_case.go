@@ -62,13 +62,11 @@ func (s *useCase) ReadModelByInferenceObjectID(ctx context.Context, inferenceObj
 }
 
 func (s *useCase) CreateModel(ctx context.Context, request presenter.CreateModelRequest) (model.MasterModel, error) {
-	mappingID := request.UsecaseInferenceObjectID
-	return s.newMasterRepo(s.db).CreateModel(ctx, model.MasterModel{FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, UsecaseInferenceObjectID: &mappingID})
+	return s.newMasterRepo(s.db).CreateModel(ctx, model.MasterModel{FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, InferenceObjectIDs: request.InferenceObjectIDs})
 }
 
 func (s *useCase) UpdateModel(ctx context.Context, id int64, request presenter.UpdateModelRequest) error {
-	mappingID := request.UsecaseInferenceObjectID
-	err := s.newMasterRepo(s.db).UpdateModel(ctx, model.MasterModel{ID: id, FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, UsecaseInferenceObjectID: &mappingID})
+	err := s.newMasterRepo(s.db).UpdateModel(ctx, model.MasterModel{ID: id, FileURL: request.FileURL, Name: request.Name, ModelName: request.ModelName, Version: request.Version, Code: request.Code, Size: request.Size, InferenceObjectIDs: request.InferenceObjectIDs})
 	if errors.Is(err, sql.ErrNoRows) {
 		return constant.ErrDataNotFound
 	}

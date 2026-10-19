@@ -265,7 +265,7 @@ func ReadModel(svc contract.MasterUseCase) fiber.Handler {
 // @Param        model_name  formData  string  true  "Model name"
 // @Param        version  formData  string  true  "Model version"
 // @Param        code  formData  string  true  "Model code"
-// @Param        usecase_inference_object_id  formData  int  true  "Usecase inference-object mapping ID"
+// @Param        inference_object_ids  formData  string  true  "Comma-separated global inference-object IDs"
 // @Success      201  {object}  response.DataPayload
 // @Failure      400  {object}  response.ErrorPayload
 // @Failure      500  {object}  response.ErrorPayload
@@ -284,7 +284,10 @@ func CreateModel(svc contract.MasterUseCase, validate *validator.Validator) fibe
 			Code:      c.FormValue("code"),
 			Size:      file.Size,
 		}
-		request.UsecaseInferenceObjectID, _ = strconv.ParseInt(c.FormValue("usecase_inference_object_id"), 10, 64)
+		request.InferenceObjectIDs, err = parseInferenceObjectIDs(c.FormValue("inference_object_ids"))
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusBadRequest, Message: "Invalid inference_object_ids"})
+		}
 		if err := validate.Validate(request); err != nil {
 			return response.ErrorValidate(c, err)
 		}
@@ -416,7 +419,7 @@ func modelFileName(original string) string {
 // @Param        model_name  formData  string  true  "Model name"
 // @Param        version  formData  string  true  "Model version"
 // @Param        code  formData  string  true  "Model code"
-// @Param        usecase_inference_object_id  formData  int  true  "Usecase inference-object mapping ID"
+// @Param        inference_object_ids  formData  string  true  "Inference-object IDs as JSON array"
 // @Success      200  {object}  response.DataPayload
 // @Failure      400  {object}  response.ErrorPayload
 // @Failure      404  {object}  response.ErrorPayload
@@ -686,4 +689,17 @@ func pathID(c *fiber.Ctx, name string) (int64, error) {
 		return 0, fiber.NewError(http.StatusBadRequest, "Invalid "+name)
 	}
 	return id, nil
+}
+
+func parseInferenceObjectIDs(value string) ([]int64, error) {
+	parts := strings.Split(strings.TrimSpace(value), ",")
+	ids := make([]int64, 0, len(parts))
+	for _, part := range parts {
+		id, err := strconv.ParseInt(strings.TrimSpace(part), 10, 64)
+		if err != nil || id < 1 {
+			return nil, err
+		}
+		ids = append(ids, id)
+	}
+	return ids, nil
 }
