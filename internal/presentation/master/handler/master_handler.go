@@ -256,7 +256,7 @@ func ReadModel(svc contract.MasterUseCase) fiber.Handler {
 
 // CreateModel godoc
 // @Summary      Create Master Model
-// @Description  Upload a model and attach it to one usecase-inference-object mapping.
+// @Description  Upload a model and attach it to one or more global inference-object mappings.
 // @Tags         Master Model
 // @Accept       multipart/form-data
 // @Produce      json
@@ -419,7 +419,7 @@ func modelFileName(original string) string {
 // @Param        model_name  formData  string  true  "Model name"
 // @Param        version  formData  string  true  "Model version"
 // @Param        code  formData  string  true  "Model code"
-// @Param        inference_object_ids  formData  string  true  "Inference-object IDs as JSON array"
+// @Param        inference_object_ids  formData  string  true  "Comma-separated global inference-object IDs"
 // @Success      200  {object}  response.DataPayload
 // @Failure      400  {object}  response.ErrorPayload
 // @Failure      404  {object}  response.ErrorPayload

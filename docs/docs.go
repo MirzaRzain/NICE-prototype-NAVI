@@ -196,7 +196,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Upload a model and attach it to one usecase-inference-object mapping.",
+                "description": "Upload a model and attach it to one or more global inference-object mappings.",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -237,9 +237,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "Usecase inference-object mapping ID",
-                        "name": "usecase_inference_object_id",
+                        "type": "string",
+                        "description": "Comma-separated global inference-object IDs",
+                        "name": "inference_object_ids",
                         "in": "formData",
                         "required": true
                     }
@@ -392,9 +392,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "Usecase inference-object mapping ID",
-                        "name": "usecase_inference_object_id",
+                        "type": "string",
+                        "description": "Comma-separated global inference-object IDs",
+                        "name": "inference_object_ids",
                         "in": "formData",
                         "required": true
                     }

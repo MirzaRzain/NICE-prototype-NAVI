@@ -601,7 +601,7 @@ paths:
     post:
       consumes:
       - multipart/form-data
-      description: Upload a model and attach it to one usecase-inference-object mapping.
+      description: Upload a model and attach it to one or more global inference-object mappings.
       parameters:
       - description: Model file
         in: formData
@@ -623,11 +623,11 @@ paths:
         name: code
         required: true
         type: string
-      - description: Usecase inference-object mapping ID
+      - description: Comma-separated global inference-object IDs
         in: formData
-        name: usecase_inference_object_id
+        name: inference_object_ids
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -700,11 +700,11 @@ paths:
         name: code
         required: true
         type: string
-      - description: Usecase inference-object mapping ID
+      - description: Comma-separated global inference-object IDs
         in: formData
-        name: usecase_inference_object_id
+        name: inference_object_ids
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
