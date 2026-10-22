@@ -13,6 +13,7 @@ import (
 	"be-dashboard-nba/constant"
 	masterDTO "be-dashboard-nba/internal/application/master/dto"
 	contract "be-dashboard-nba/internal/domain/contract/usecase"
+	"be-dashboard-nba/internal/domain/model"
 	"be-dashboard-nba/internal/infrastructure/validator"
 	"be-dashboard-nba/internal/presentation/auth"
 	"be-dashboard-nba/internal/presentation/master/presenter"
@@ -225,6 +226,36 @@ func ReadModelsByUsecaseCode(svc contract.MasterUseCase) fiber.Handler {
 			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get models by usecase"})
 		}
 		return response.Data(c, response.DataPayload{Code: http.StatusOK, Data: data, Message: "Successfully get models by usecase"})
+	}
+}
+
+// ReadModelByInferenceObjectID godoc
+// @Summary      Get Model By Inference Object ID
+// @Tags         Master Model
+// @Produce      json
+// @Param        inference_object_id  path  int  true  "Global inference-object ID"
+// @Success      200  {object}  response.DataPayload
+// @Failure      404  {object}  response.ErrorPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/models/inference-object/{inference_object_id} [get]
+func ReadModelByInferenceObjectID(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		id, err := pathID(c, "inference_object_id")
+		if err != nil {
+			return err
+		}
+		data, err := svc.ReadModelByInferenceObjectID(c.UserContext(), id)
+		if errors.Is(err, sql.ErrNoRows) {
+			return response.Error(c, response.ErrorParam{Code: http.StatusNotFound, Message: "Model not found"})
+		}
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get model by inference object"})
+		}
+		return response.Data(c, response.DataPayload{
+			Code:    http.StatusOK,
+			Data:    model.ModelOption{ModelID: data.ID, Version: data.Version, ModelName: data.ModelName},
+			Message: "Successfully get model by inference object",
+		})
 	}
 }
 
@@ -513,7 +544,29 @@ func ReadInferenceObjects(svc contract.MasterUseCase) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		data, err := svc.ReadUsecaseInferenceObjects(c.UserContext(), usecaseID)
+		data, err := svc.ReadUsecaseInferenceObjectOptions(c.UserContext(), usecaseID)
+		if err != nil {
+			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get inference objects"})
+		}
+		return response.Data(c, response.DataPayload{Code: http.StatusOK, Data: data, Message: "Successfully get inference objects"})
+	}
+}
+
+// ReadInferenceObjectsByUsecaseCode godoc
+// @Summary      Get Inference Objects By Usecase Code
+// @Tags         Master Usecase
+// @Produce      json
+// @Param        usecase_code  path  string  true  "Usecase code"
+// @Success      200  {object}  response.DataPayload
+// @Failure      500  {object}  response.ErrorPayload
+// @Router       /master/usecases/code/{usecase_code}/inference-objects [get]
+func ReadInferenceObjectsByUsecaseCode(svc contract.MasterUseCase) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		code := strings.TrimSpace(c.Params("usecase_code"))
+		if code == "" {
+			return fiber.NewError(http.StatusBadRequest, "Invalid usecase_code")
+		}
+		data, err := svc.ReadUsecaseInferenceObjectOptionsByCode(c.UserContext(), code)
 		if err != nil {
 			return response.Error(c, response.ErrorParam{Code: http.StatusInternalServerError, Message: "Failed get inference objects"})
 		}

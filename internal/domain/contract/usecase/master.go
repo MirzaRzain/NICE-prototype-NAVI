@@ -25,6 +25,8 @@ type MasterUseCase interface {
 	DeleteModel(ctx context.Context, id int64) error
 	SetUsecaseInferenceObjects(ctx context.Context, usecaseID int64, request presenter.SetInferenceObjectsRequest, userID string) error
 	ReadUsecaseInferenceObjects(ctx context.Context, usecaseID int64) ([]model.InferenceObjectAssignment, error)
+	ReadUsecaseInferenceObjectOptions(ctx context.Context, usecaseID int64) ([]model.InferenceObjectOption, error)
+	ReadUsecaseInferenceObjectOptionsByCode(ctx context.Context, usecaseCode string) ([]model.InferenceObjectOption, error)
 	ReadSources(ctx context.Context, params dto.ReadSourcesParams) (model.MasterSourcePaginationResponse, error)
 	CreateVideo(ctx context.Context, request presenter.CreateVideoRequest, userID string) (model.MasterVideo, error)
 	CreateCamera(ctx context.Context, request presenter.CreateCameraRequest, userID string) (model.MasterCamera, error)

@@ -76,6 +76,17 @@ type InferenceObjectAssignment struct {
 	ObjectCode        string `json:"object_code,omitempty"`
 }
 
+type InferenceObjectOption struct {
+	InferenceObjectID   int64  `json:"inference_object_id"`
+	InferenceObjectName string `json:"inference_object_name"`
+}
+
+type ModelOption struct {
+	ModelID   int64  `json:"model_id"`
+	Version   string `json:"version"`
+	ModelName string `json:"model_name"`
+}
+
 type MasterCamera struct {
 	ID              int64           `json:"id"`
 	AreaLocationID  *int64          `json:"area_location_id,omitempty"`

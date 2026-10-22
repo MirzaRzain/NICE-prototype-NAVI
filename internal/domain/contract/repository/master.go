@@ -24,6 +24,8 @@ type MasterRepository interface {
 	DeleteModel(ctx context.Context, id int64) error
 	SetUsecaseInferenceObjects(ctx context.Context, usecaseID int64, assignments []model.InferenceObjectAssignment, userID string) error
 	ReadUsecaseInferenceObjects(ctx context.Context, usecaseID int64) ([]model.InferenceObjectAssignment, error)
+	ReadUsecaseInferenceObjectOptions(ctx context.Context, usecaseID int64) ([]model.InferenceObjectOption, error)
+	ReadUsecaseInferenceObjectOptionsByCode(ctx context.Context, usecaseCode string) ([]model.InferenceObjectOption, error)
 	ReadSources(ctx context.Context, params dto.ReadSourcesParams) ([]model.MasterSource, error)
 	CountSources(ctx context.Context, params dto.ReadSourcesParams) (int, error)
 	CreateVideo(ctx context.Context, video model.MasterVideo, userID string) (model.MasterVideo, error)

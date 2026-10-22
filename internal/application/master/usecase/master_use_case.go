@@ -114,6 +114,14 @@ func (s *useCase) ReadUsecaseInferenceObjects(ctx context.Context, usecaseID int
 	return data, nil
 }
 
+func (s *useCase) ReadUsecaseInferenceObjectOptions(ctx context.Context, usecaseID int64) ([]model.InferenceObjectOption, error) {
+	return s.newMasterRepo(s.db).ReadUsecaseInferenceObjectOptions(ctx, usecaseID)
+}
+
+func (s *useCase) ReadUsecaseInferenceObjectOptionsByCode(ctx context.Context, usecaseCode string) ([]model.InferenceObjectOption, error) {
+	return s.newMasterRepo(s.db).ReadUsecaseInferenceObjectOptionsByCode(ctx, usecaseCode)
+}
+
 func (s *useCase) ReadSources(ctx context.Context, params masterDTO.ReadSourcesParams) (model.MasterSourcePaginationResponse, error) {
 	repo := s.newMasterRepo(s.db)
 	total, err := repo.CountSources(ctx, params)
